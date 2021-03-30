@@ -1,0 +1,108 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\definecolor{mpigreen}{HTML}{007977}
+\setbeamercolor{frametitle}{bg=mpigreen}
+
+\title{Introduction to mathematical programming}
+
+\author{Julien Meier}
+%\institute{Max Planck Institute for Biological Cybernetics \\ Computational Principles of Intelligence Lab}
+%\titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.png}}
+
+\input{graphics}
+
+\newcommand{\nphard}{$\mathcal{NP}$-hard\,}
+
+\begin{document}
+
+
+\maketitle
+
+\begin{frame}{Damn, it is about mathematics?!}
+Nope, it is not - at least not really if you're not delving into the theory.\\\,\\
+
+
+This will be more about modelling of problems from practise and the theoretical basics.
+\end{frame}
+
+\begin{frame}{What can we model?}
+A lot!\\\,\\
+
+Let's look at some examples...
+\end{frame}
+
+
+
+\begin{frame}{Example: Maximum flow ("easy" problem)}
+\textbf{Problem:} Maximum flow\\
+\textbf{Goal:} How much flow can you push from node $s$ to node $t$ while complying with capacity constraints.\\
+
+\begin{figure}
+	\centering
+	\scalebox{1.4}{\maxFlow}
+	\caption{Example for maximum flow. Upper bound is 19 units due to the capacity constraints of the edges going into $t$.}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Example: Minimum Vertex Cover (\nphard)}
+\textbf{Problem:} Minimum Vertex Cover\\
+\textbf{Goal:} Find a subset of vertices that cover each edge while minimizing costs.\\
+
+\begin{figure}
+	\centering
+\begin{tabular}{c c}
+	\mvcSufficient
+	\mvcInsufficient
+\end{tabular}
+	\caption{Example for minimum vertex cover. Numbers in nodes are associated costs. Dashed edges are not covered which renders the instance infeasible. All dashed nodes are not included in the subset.}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Short "reminder" on what's \nphard}
+A problem being \nphard\, means \\$\qquad$ \textit{"probably not solvable deterministically in sub-exponential time"}\\ $\rightarrow$ difficult problem...\\\,\\
+More precisely, a problem $B$ is \nphard\, if you can reduce another \nphard problem $A$ to it. Basic idea: Solve $A$ by solving $B$.\\\,\\
+Reduction: $A \rightarrow B$ (formulate problem $A$ as problem $B$, solve it, then derive knowledge from that)
+\end{frame}
+
+\begin{frame}{Example: Graph coloring (\nphard)}
+\textbf{Problem:} Graph coloring\\
+\textbf{Goal:} Color each node with adjacent nodes colored distinctly.\\
+
+\begin{figure}
+	\centering
+	\scalebox{0.6}{\chromaticNumber}
+	\caption{Example for graph coloring. Adjacent nodes are colored distinctly.}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}{Example: Maximum Independent Set (\nphard)}
+\textbf{Problem:} Maximum Independent Set\\
+\textbf{Goal:} Find a maximum subset of vertices that are not adjacent.\\
+
+\begin{figure}
+	\centering
+	\scalebox{0.8}{\maxIndependentSet}
+	\caption{Example for maximum independent set. Dashed edges are excluded from the set. Note that none of the vertices included are adjacent.}
+\end{figure}
+\end{frame}
+
+\begin{frame}{How do we model these problems?}
+Well, that's easy!\\\,\\
+
+
+\end{frame}
+
+\end{document}
