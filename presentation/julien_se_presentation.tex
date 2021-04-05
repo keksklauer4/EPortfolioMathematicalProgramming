@@ -8,18 +8,20 @@
 \usepackage[scale=2]{ccicons}
 \usepackage{pgfplots}
 \usepgfplotslibrary{dateplot}
+\usepackage{wrapfig}
 
 \usepackage{xspace}
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
 \definecolor{mpigreen}{HTML}{007977}
 \setbeamercolor{frametitle}{bg=mpigreen}
-
+\newcommand{\primaryColor}[1]{\textcolor{mpigreen}{#1}}
+\newcommand{\primaryColorB}[1]{\textcolor{mpigreen}{\textbf{#1}}}
+\newcommand{\q}[1]{``#1``}
 \title{Introduction to mathematical programming}
 
 \author{Julien Meier}
-%\institute{Max Planck Institute for Biological Cybernetics \\ Computational Principles of Intelligence Lab}
-%\titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.png}}
-
+\newcommand{\curlO}{\{\,\,}
+\newcommand{\curlC}{\,\,\}}
 \input{graphics}
 
 \newcommand{\nphard}{$\mathcal{NP}$-hard\,}
@@ -44,9 +46,9 @@ Let's look at some examples...
 
 
 
-\begin{frame}{Example: Maximum flow ("easy" problem)}
-\textbf{Problem:} Maximum flow\\
-\textbf{Goal:} How much flow can you push from node $s$ to node $t$ while complying with capacity constraints.\\
+\begin{frame}{Example: Maximum flow (\q{easy} problem)}
+\primaryColorB{Problem:} Maximum flow\\
+\primaryColorB{Goal:} How much flow can you push from node $s$ to node $t$ while complying with capacity constraints.\\
 
 \begin{figure}
 	\centering
@@ -56,8 +58,8 @@ Let's look at some examples...
 \end{frame}
 
 \begin{frame}{Example: Minimum Vertex Cover (\nphard)}
-\textbf{Problem:} Minimum Vertex Cover\\
-\textbf{Goal:} Find a subset of vertices that cover each edge while minimizing costs.\\
+\primaryColorB{Problem:} Minimum Vertex Cover\\
+\primaryColorB{Goal:} Find a subset of vertices that cover each edge while minimizing costs.\\
 
 \begin{figure}
 	\centering
@@ -69,15 +71,15 @@ Let's look at some examples...
 \end{figure}
 \end{frame}
 
-\begin{frame}{Short "reminder" on what's \nphard}
-A problem being \nphard\, means \\$\qquad$ \textit{"probably not solvable deterministically in sub-exponential time"}\\ $\rightarrow$ difficult problem...\\\,\\
+\begin{frame}{Short \q{reminder} on what's \nphard}
+A problem being \nphard\, means \\$\qquad$ \textit{\q{probably not solvable deterministically in sub-exponential time}}\\ $\rightarrow$ difficult problem...\\\,\\
 More precisely, a problem $B$ is \nphard\, if you can reduce another \nphard problem $A$ to it. Basic idea: Solve $A$ by solving $B$.\\\,\\
 Reduction: $A \rightarrow B$ (formulate problem $A$ as problem $B$, solve it, then derive knowledge from that)
 \end{frame}
 
 \begin{frame}{Example: Graph coloring (\nphard)}
-\textbf{Problem:} Graph coloring\\
-\textbf{Goal:} Color each node with adjacent nodes colored distinctly.\\
+\primaryColorB{Problem:} Graph coloring\\
+\primaryColorB{Goal:} Color each node with adjacent nodes colored distinctly.\\
 
 \begin{figure}
 	\centering
@@ -89,8 +91,8 @@ Reduction: $A \rightarrow B$ (formulate problem $A$ as problem $B$, solve it, th
 
 
 \begin{frame}{Example: Maximum Independent Set (\nphard)}
-\textbf{Problem:} Maximum Independent Set\\
-\textbf{Goal:} Find a maximum subset of vertices that are not adjacent.\\
+\primaryColorB{Problem:} Maximum Independent Set\\
+\primaryColorB{Goal:} Find a maximum subset of vertices that are not adjacent.\\
 
 \begin{figure}
 	\centering
@@ -102,7 +104,181 @@ Reduction: $A \rightarrow B$ (formulate problem $A$ as problem $B$, solve it, th
 \begin{frame}{How do we model these problems?}
 Well, that's easy!\\\,\\
 
+Using:
+\begin{enumerate}
+	\item A bunch of \primaryColorB{variables}
+	\item An \primaryColorB{objective function} we want to \textit{minimize}/\textit{maximize}
+	\item A lot of \primaryColorB{constraints} in the form of \primaryColorB{inequalities}
+\end{enumerate}
 
+\end{frame}
+
+
+\begin{frame}{Component 1: Variables}
+
+Variables $x_1, ..., x_n$ can be defined to be constrained to:
+\begin{enumerate}
+	\item $x_i\in \mathbb{R}$
+	\item $x_i\in \mathbb{Z}$ (makes it difficult)
+\end{enumerate}
+\,\\
+Using a suited solver and the \q{program} we define, we can get the variables' optimal values.
+\end{frame}
+
+\begin{frame}{Component 2: Objective function (1)}
+
+The solver is given an objective function that should be \textit{minimized}/\textit{maximized}.\\
+Thus, the optimal value is a \textit{variable assignment} that has minimal/maximal value.\\
+
+\end{frame}
+
+\begin{frame}{Component 2: Objective function (2)}
+How does it look like?\\
+
+\begin{equation}
+	max \curlO 2x_1 + 3x_2 - 4x_3\curlC
+\end{equation}
+
+Trivial! Why not set everything to either $\infty$ or $-\infty$?\\
+In the real world, everything is constrained.\\\,\\
+
+The objective function \primaryColorB{should} be linear.
+
+\end{frame}
+
+
+\begin{frame}{Component 2: Objective function (3)}
+
+What could we minimize/maximize?\\
+Examples:
+\begin{itemize}
+	\item Minimize the colors used in the coloring problem.
+	\item Maximize the flow in the max flow problem.
+	\item Minimize the cost in Minimum Vertex Cover.
+	\item Maximize the cardinality of the Maximum Independent Set problem.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Component 3: Constraints (1)}
+
+Constraints are linear inequalities of the form:
+\begin{equation}
+	3x_2 - 4x_3 \leq 5
+\end{equation}
+\,\\
+In general with $m$ inequalities and $n$ variables
+\begin{equation}
+	\sum\limits_{i=1}^{n} a_{j,i}\cdot x_i \leq b_j,\qquad j\in \curlO 1, ..., m \curlC
+\end{equation}
+with constants $a_{j,i} \in \mathbb{R}$, $b_j\in \mathbb{R}$ and decision variables $x_i$.
+\end{frame}
+
+\begin{frame}{Component 3: Constraints (2)}
+
+What can we model using $\leq$-constraints?\\\,\\
+Well, in the \q{easy} case (none of the variables is integral)
+\begin{enumerate}
+	\item $\geq$ by multiplying with $-1$.
+	\item $a=b$ by splitting into $a\leq b$ and $a\geq b$.
+\end{enumerate}
+
+
+\end{frame}
+
+
+\begin{frame}{Component 3: Constraints (3)}
+
+We can define \q{binary} values as follows:\\
+\begin{equation}
+	0\leq x \leq 1, \qquad x\in \mathbb{Z}
+\end{equation}
+
+Using binary values we can create constraints of the form $a != b$.\\\,\\
+We define $x \in \mathcal{B} = \curlO 0,1\curlC$ to indicate that $x\in \mathbb{Z}$ and $0\leq x\leq 1$.
+
+\end{frame}
+
+
+\begin{frame}{Putting it all together}
+Let's solve the Maximum Independent Set problem using a MILP:\\
+
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \scalebox{0.75}{\maxIndependentSet}
+\end{wrapfigure}
+\,\\\,\\
+\primaryColorB{Variables}:\, $x_0, x_1, ..., x_7 \in \mathcal{B}$\\\,\\
+\primaryColorB{Objective}: $max \curlO\sum\limits_{i=0}^{7} x_i\curlC$\\\,\\
+\primaryColorB{Constraints}:\\
+For every edge $e=\curlO i,j\curlC$, \\$\qquad$ we create a constraint:\\
+	$\qquad x_i + x_j \leq 1$
+\end{frame}
+
+
+\begin{frame}{Demo (1)}
+
+\begin{center}
+	\Huge \primaryColorB{Demo (1):\\ Maximum Independent Set}
+\end{center}
+\end{frame}
+
+\begin{frame}{One Ring to rule them all [...]}
+Let's do graph coloring (minimizing distinct colors)
+
+\vspace{-0.9cm}
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \scalebox{0.6}{\chromaticNumber}
+\end{wrapfigure}
+\,\\\,\\\,\\
+\primaryColorB{Variables}:\, $x_0, ..., x_9 \in \mathbb{Z},\, x_\lambda \in \mathbb{R}$\\
+\primaryColorB{Objective}: $min \curlO x_\lambda\curlC$\\
+\primaryColorB{Constraints}:\\
+For every node $i$:\\
+$\qquad x_i \geq 0$\\
+$\qquad x_i \leq x_\lambda$\\
+For every edge $e=\curlO i,j\curlC$:\\
+	$\qquad x_i \neq x_j$\\
+\end{frame}
+
+\begin{frame}{Demo (2)}
+
+\begin{center}
+	\Huge \primaryColorB{Demo (2):\\ Graph coloring}
+\end{center}
+\end{frame}
+
+\begin{frame}{Demo (2)}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.4]{model_everything.jpeg}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Well...}
+
+\begin{center}
+	\Huge \primaryColorB{Nope.}
+\end{center}
+\end{frame}
+
+\newcommand{\circleNode}[2]{\node[state, mpigreen,minimum size=1cm] (x5) at (#1,#2) {};}
+\begin{frame}{Counterexample}
+\primaryColorB{Problem:} Circle packing into a rectangle.
+\begin{figure}
+	\centering
+	\circlePacking
+	\caption{As many circles as possible should be packed into the rectangle  without the circles overlapping. Well, for that we need quadratic constraints...}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{We will not solve that.}
+
+\begin{center}
+	\Huge \primaryColorB{Thank you for staying.}
+\end{center}
 \end{frame}
 
 \end{document}
