@@ -1,0 +1,14 @@
+{
+  "name": "milp_examples",
+  "version": "1.0.0",
+  "description": "Examples on how to model problems as milps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ricardo",
+  "license": "ISC",
+  "devDependencies": {
+    "lp_solve": "^0.2.16"
+  }
+}
