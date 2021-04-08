@@ -34,7 +34,29 @@
 Nope, it is not - at least not really if you're not delving into the theory.\\\,\\
 
 
-This will be more about modelling of problems from practise and the theoretical basics.
+This will be more about modelling of problems from practice and the theoretical basics.
+\end{frame}
+
+
+\begin{frame}{Why should we care?}
+Because...
+\begin{enumerate}
+	\item we can easily \primaryColorB{solve difficult problems}
+	\item it serves as a \primaryColorB{first approach}
+	\item it might help \primaryColorB{approximating} problems
+	\item \primaryColorB{Braun} loves it! (awesome for your PA)
+	\item it is widely used in \primaryColorB{practice}
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Agenda}
+\begin{enumerate}
+	\item Example problems
+	\item Basics of modelling
+	\item Applying the techniques
+	\item Staying realistic
+\end{enumerate}
 \end{frame}
 
 \begin{frame}{What can we model?}
@@ -70,11 +92,6 @@ Let's look at some examples...
 \end{figure}
 \end{frame}
 
-\begin{frame}{Short \q{reminder} on what's \nphard}
-A problem being \nphard\, means \\$\qquad$ \textit{\q{probably not solvable deterministically in sub-exponential time}}\\ $\rightarrow$ difficult problem...\\\,\\
-More precisely, a problem $B$ is \nphard\, if you can reduce another \nphard problem $A$ to it. Basic idea: Solve $A$ by solving $B$.\\\,\\
-Reduction: $A \rightarrow B$ (formulate problem $A$ as problem $B$, solve it, then derive knowledge from that)
-\end{frame}
 
 \begin{frame}{Example: Graph coloring (\nphard)}
 \primaryColorB{Problem:} Graph coloring\\
@@ -99,6 +116,13 @@ Reduction: $A \rightarrow B$ (formulate problem $A$ as problem $B$, solve it, th
 	\caption{Example for maximum independent set. Dashed edges are excluded from the set. Note that none of the vertices included are adjacent.}
 \end{figure}
 \end{frame}
+
+\begin{frame}{Short \q{reminder} on what's \nphard}
+A problem being \nphard\, means \\$\qquad$ \textit{\q{probably not solvable deterministically in sub-exponential time}}\\ $\rightarrow$ difficult problem...\\\,\\
+More precisely, a problem $B$ is \nphard\, if you can reduce another \nphard problem $A$ to it. Basic idea: Solve $A$ by solving $B$.\\\,\\
+Reduction: $A \rightarrow B$ (formulate problem $A$ as problem $B$, solve it, then derive knowledge from that)
+\end{frame}
+
 
 \begin{frame}{How do we model these problems?}
 Well, that's easy!\\\,\\

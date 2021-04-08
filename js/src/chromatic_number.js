@@ -78,7 +78,7 @@ function graphColoring(graph)
   }
 
   console.log(lp.solve());
-  var colors = Math.round(lp.get(helperVar));
+  var colors = Math.round(lp.get(helperVar)) + 1;
   for (var [key, nodeVar] of Object.entries(nodes))
   {
     console.log("Node ",key, " has color ", lp.get(nodeVar));
