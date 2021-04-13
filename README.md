@@ -17,4 +17,4 @@ Just navigate to ```js/src/``` and execute ```node <file>.js``` with file either
 ## Where can I find more material on this?
 For a general introduction to concepts of linear programming, I advise to have a look at [Tim Roughgarden's lectures on Algorithms](https://youtube.com/playlist?list=PLEGCF-WLh2RJh2yDxlJJjnKswWdoO8gAc) (starts with max flow and other typical "simple" problems and then dives into the topic of linear programming) and use some wrapper around a (MI)LP solver.
 
-I wrote a [wrapper for (MI)LPs](https://github.com/keksklauer4/SCIP_Wrapper) and started one for QUBO (not covered in this presentation). There are a lot of examples that could help getting started.
+In fact, I wrote a [wrapper for (MI)LPs](https://github.com/keksklauer4/SCIP_Wrapper) and started one for QUBO (not covered in this presentation). There are a lot of examples that could help getting started.
